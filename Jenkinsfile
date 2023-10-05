@@ -13,10 +13,10 @@ pipeline {
                 script {
                     if (env.GIT_BRANCH == 'origin/main') {
                 sh '''
-                docker build -t scribral/trio-flask:latest .
-                docker build -t scribral/trio-flask:v$BUILD_NUMBER .
-                docker build -t scribral/trio-mysql:latest .
-                docker build -t scribral/trio-mysql:v$BUILD_NUMBER .
+                docker build -t scribral/trio-flask:latest ./flask-app
+                docker build -t scribral/trio-flask:v$BUILD_NUMBER ./flask-app
+                docker build -t scribral/trio-mysql:latest ./db
+                docker build -t scribral/trio-mysql:v$BUILD_NUMBER ./db
                 docker build -t scribral/trio-nginx:latest ./nginx
                 docker build -t scribral/trio-nginx:v$BUILD_NUMBER ./nginx
                
@@ -41,8 +41,8 @@ pipeline {
                 sh '''
                 docker push scribral/trio-flask:latest
                 docker push scribral/trio-flask:v$BUILD_NUMBER
-                docker build -t scribral/trio-mysql:latest .
-                docker build -t scribral/trio-mysql:v$BUILD_NUMBER .
+                docker build -t scribral/trio-mysql:latest
+                docker build -t scribral/trio-mysql:v$BUILD_NUMBER
                 docker push scribral/trio-nginx:latest
                 docker push scribral/trio-nginx:v$BUILD_NUMBER
                 '''
