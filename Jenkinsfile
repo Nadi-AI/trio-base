@@ -10,8 +10,6 @@ pipeline {
         }        
         stage('Build') {
             steps {
-                script {
-                    if (env.GIT_BRANCH == 'origin/main') {
                 sh '''
                 docker build -t scribral/trio-flask:latest ./flask-app
                 docker build -t scribral/trio-flask:v$BUILD_NUMBER ./flask-app
@@ -20,16 +18,7 @@ pipeline {
                 docker build -t scribral/trio-nginx:latest ./nginx
                 docker build -t scribral/trio-nginx:v$BUILD_NUMBER ./nginx
                
-                '''                      
-                    } else {
-                        sh '''
-                        echo "I don't need to do this"
-                        '''
-
-                    }
-
-
-                }                
+                '''                                    
 
             }
         }
