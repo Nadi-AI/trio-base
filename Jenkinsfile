@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Greeting and niceties') {
+        stage('Greeting') {
             steps {
                 sh '''
                 echo "Good Morning Nadia, let's get building!"
@@ -30,8 +30,8 @@ pipeline {
                 sh '''
                 docker push scribral/trio-flask:latest
                 docker push scribral/trio-flask:v$BUILD_NUMBER
-                docker build -t scribral/trio-mysql:latest
-                docker build -t scribral/trio-mysql:v$BUILD_NUMBER
+                docker push -t scribral/trio-mysql:latest
+                docker push -t scribral/trio-mysql:v$BUILD_NUMBER
                 docker push scribral/trio-nginx:latest
                 docker push scribral/trio-nginx:v$BUILD_NUMBER
                 '''
