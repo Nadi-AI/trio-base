@@ -50,7 +50,7 @@ pipeline {
                     if (env.GIT_BRANCH == 'origin/main') {
                             
                 sh '''
-                kubectl apply -f ./k8s --namespace=development
+                kubectl apply -f ./k8s -n development
                 kubectl rollout restart deployment --namespace=development flask-deployment
                 '''
                     } else if (env.GIT_BRANCH == 'origin/main') {
