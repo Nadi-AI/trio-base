@@ -44,34 +44,17 @@ pipeline {
                 }               
             }
         }
-        stage('Deploy and rollout restart') {
-            steps {
-                script {
-                    if (env.GIT_BRANCH == 'origin/main') {
-                            
-                sh '''
-                kubectl apply -f ./k8s -n development
-                kubectl rollout restart deployment --namespace=development flask-deployment
-                '''
-                    } else if (env.GIT_BRANCH == 'origin/main') {
-                        sh '''
-                        kubectl apply -f ./k8s --namespace=production
-                        kubectl rollout restart deployment --namespace=production flask-deployment
-                        '''
-
-                    }  else {
-                        sh '''
-                        echo "I don't need this negativity in my life"
-                        '''
-
-                      }              
-                }                
-            }
-        }  
         stage('Clean Up') { 
             steps {
                 sh '''
                 docker system prune -a --force
+                '''
+            }
+        }       
+        stage('End of automation msg') { 
+            steps {
+                sh '''
+                echo "Now do an apply manually, and rollout an update if required"
                 '''
             }
         }
