@@ -7,7 +7,19 @@ pipeline {
                 echo "Good Morning Nadia, let's get building!"
                 '''
             }
-        }        
+        }
+        node {
+        stage('SCM') {
+          checkout scm
+        }
+        stage('SonarQube Analysis') {
+          def scannerHome = tool 'SonarScanner';
+          withSonarQubeEnv() {
+            sh "${scannerHome}/bin/sonar-scanner"
+          }
+        }
+      }
+                
         stage('Build') {
             steps {
                 sh '''
